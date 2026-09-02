@@ -56,10 +56,12 @@ a:hover{color:var(--sac-green)}
 .foot a{color:inherit;transition:color .2s ease;display:inline-flex;align-items:center;min-height:44px;padding:0 20px;margin:0 -20px}
 .foot a:hover{color:var(--sac-paper)}
 .foot a{text-underline-offset:5px;text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:rgba(0,168,23,.45)}
-@media (prefers-reduced-motion:reduce){.glow,.center,.crest,.rule,.wordmark,.tagline,.frame,.corner,.foot,.grid,.veil{animation:none}.rule{width:64px}.crest-wrap{transform:none!important}}
+@media (prefers-reduced-motion:reduce){.glow,.center,.crest,.rule,.wordmark,.tagline,.frame,.corner,.foot,.veil{animation:none}.stage::before{animation:none}.rule{width:64px}.crest-wrap{transform:none!important}}
 @media (max-width:768px){
-.stage::before{background:radial-gradient(140% 80% at 50% 6%,#0b3a45 0%,#06272e 48%,#04191e 100%)}
-.glow{filter:blur(64px)}
+/* Portrait crops a 16:9 field hard — bias the crop toward the light in the upper left */
+.stage::before{background:#04161b url("landing-field.jpg") 28% 34%/cover no-repeat}
+.glow{filter:blur(64px);opacity:.3}
+.glow.b{opacity:.19}
 .glow.a{width:110vw;height:110vw;left:-30vw;top:-34vw}
 .glow.b{width:100vw;height:100vw;right:-32vw;bottom:-30vw}
 @keyframes driftA{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(7vw,3vh,0) scale(1.06)}100%{transform:translate3d(3vw,7vh,0) scale(1.02)}}
