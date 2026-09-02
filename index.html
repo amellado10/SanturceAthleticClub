@@ -16,25 +16,22 @@ body{background:var(--sac-navy);color:var(--text-inverse);font:var(--type-body);
 a{color:var(--text-inverse);text-decoration:none}
 a:hover{color:var(--sac-green)}
 .stage{position:relative;height:100vh;height:100dvh;width:100%;display:grid;place-items:center;isolation:isolate;overflow:hidden}
-/* Layer 1 — base field: deep navy graduating into brand teal */
-.stage::before{content:"";position:absolute;inset:0;z-index:-4;background:radial-gradient(120% 90% at 50% 8%,#0b3a45 0%,#06272e 46%,#04191e 100%)}
+/* Layer 1 — supplied brand field: dark teal halftone photograph */
+.stage::before{content:"";position:absolute;inset:0;z-index:-4;background:#04161b url("landing-field.jpg") center/cover no-repeat;animation:fieldIn 1.8s var(--ease-out) both}
+@keyframes fieldIn{from{opacity:0;transform:scale(1.03)}to{opacity:1;transform:scale(1)}}
 /* Layer 2 — two slow drifting brand-hue auroras */
-.glow{position:absolute;z-index:-3;border-radius:50%;filter:blur(110px);opacity:.4;will-change:transform}
+.glow{position:absolute;z-index:-3;border-radius:50%;filter:blur(120px);opacity:.4;mix-blend-mode:screen;will-change:transform}
 .gw{position:absolute;inset:0;z-index:-3;pointer-events:none;transition:transform 1.2s var(--ease-standard);will-change:transform}
 .gw.live{transition:none}
 .gw.a{transform:translate3d(var(--ax,0px),var(--ay,0px),0)}
 .gw.b{transform:translate3d(var(--bx,0px),var(--by,0px),0)}
 .glow.a{width:60vw;height:60vw;left:-12vw;top:-18vw;background:radial-gradient(circle,var(--sac-blue) 0%,rgba(0,86,125,0) 68%);animation:driftA 26s ease-in-out infinite alternate}
-.glow.b{width:52vw;height:52vw;right:-14vw;bottom:-20vw;background:radial-gradient(circle,var(--sac-green) 0%,rgba(0,168,23,0) 66%);opacity:.24;animation:driftB 31s ease-in-out infinite alternate}
+.glow.b{width:52vw;height:52vw;right:-14vw;bottom:-20vw;background:radial-gradient(circle,var(--sac-green) 0%,rgba(0,168,23,0) 66%);opacity:.26;animation:driftB 31s ease-in-out infinite alternate}
 @keyframes driftA{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(7vw,2vh,0) scale(1.08)}100%{transform:translate3d(3vw,7vh,0) scale(1.02)}}
 @keyframes driftB{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-6vw,-3vh,0) scale(1.07)}100%{transform:translate3d(-2vw,-8vh,0) scale(1.01)}}
-/* Layer 3 — fine engineering grid, the editorial rule system made ambient */
-.grid{position:absolute;inset:-1px;z-index:-2;background-image:linear-gradient(to right,rgba(244,242,237,.055) 1px,transparent 1px),linear-gradient(to bottom,rgba(244,242,237,.055) 1px,transparent 1px);background-size:96px 96px;mask-image:radial-gradient(80% 70% at 50% 50%,#000 20%,transparent 88%);animation:gridDrift 90s linear infinite}
-@keyframes gridDrift{to{background-position:96px 96px}}
-/* Layer 4 — vignette + grain to keep the field matte, not glossy */
-.veil{position:absolute;inset:0;z-index:-1;background:radial-gradient(70% 60% at 50% 48%,transparent 30%,rgba(4,25,30,.72) 100%);animation:veilBreathe 19s var(--ease-standard) infinite alternate}
-@keyframes veilBreathe{to{opacity:.86}}
-.grain{position:absolute;inset:0;z-index:-1;opacity:.16;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+/* Layer 3 — vignette to seat the crest in the field */
+.veil{position:absolute;inset:0;z-index:-1;background:radial-gradient(72% 62% at 50% 46%,transparent 34%,rgba(2,14,18,.66) 100%);animation:veilBreathe 19s var(--ease-standard) infinite alternate}
+@keyframes veilBreathe{to{opacity:.88}}
 /* Content */
 .center{display:grid;justify-items:center;gap:clamp(28px,4vh,44px);text-align:center;padding:0 24px;perspective:900px}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}}
@@ -46,18 +43,19 @@ a:hover{color:var(--sac-green)}
 .rule{width:64px;height:1px;background:var(--line-inverse);animation:ruleIn 1.1s cubic-bezier(.16,1,.3,1) .5s both,ruleGlow 13s var(--ease-standard) 2s infinite}
 @keyframes ruleGlow{0%,100%{opacity:1}50%{opacity:.45}}
 @keyframes ruleIn{from{width:0;opacity:0}to{width:64px;opacity:1}}
-.wordmark{font:var(--weight-bold) clamp(13px,1.1vw,15px)/1.2 var(--font-display);letter-spacing:var(--track-widest);text-transform:uppercase;color:var(--text-inverse);animation:rise 1.1s cubic-bezier(.16,1,.3,1) .68s both}
-.tagline{font:var(--type-eyebrow);font-size:11px;letter-spacing:var(--track-wider);text-transform:uppercase;color:var(--text-inverse-muted);animation:rise 1.1s cubic-bezier(.16,1,.3,1) .84s both,fadePulse 8s var(--ease-standard) 2.2s infinite}
+.wordmark{font:var(--weight-bold) clamp(13px,1.1vw,15px)/1.2 var(--font-display);letter-spacing:var(--track-widest);text-transform:uppercase;color:var(--sac-green);animation:rise 1.1s cubic-bezier(.16,1,.3,1) .68s both}
+.tagline{font:var(--type-eyebrow);font-size:11px;letter-spacing:var(--track-wider);text-transform:uppercase;color:var(--sac-green);animation:rise 1.1s cubic-bezier(.16,1,.3,1) .84s both,fadePulse 8s var(--ease-standard) 2.2s infinite}
 @keyframes fadePulse{0%,100%{opacity:1}50%{opacity:.62}}
 /* Corner marks — fixed frame, per the brand's rule-and-margin layout */
 .frame{position:absolute;inset:clamp(20px,3vw,40px);pointer-events:none;border:1px solid rgba(244,242,237,.09);animation:softIn 1.6s var(--ease-out) .1s both}
 @keyframes softIn{from{opacity:0}to{opacity:1}}
-.corner{position:absolute;top:calc(clamp(20px,3vw,40px) + 14px);font:var(--type-eyebrow);letter-spacing:var(--track-widest);text-transform:uppercase;color:rgba(244,242,237,.42);animation:rise 1.2s cubic-bezier(.16,1,.3,1) 1s both}.corner.l
+.corner{position:absolute;top:calc(clamp(20px,3vw,40px) + 14px);font:var(--type-eyebrow);letter-spacing:var(--track-widest);text-transform:uppercase;color:rgba(0,168,23,.88);animation:rise 1.2s cubic-bezier(.16,1,.3,1) 1s both}.corner.l
 {left:clamp(36px,4vw,58px)}
 .corner.r{right:clamp(36px,4vw,58px)}
-.foot{position:absolute;bottom:max(clamp(30px,3.4vw,48px),env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:clamp(20px,3vw,40px);font:var(--type-eyebrow);letter-spacing:var(--track-wider);text-transform:uppercase;color:rgba(244,242,237,.42);animation:rise 1.2s cubic-bezier(.16,1,.3,1) 1.15s both}
+.foot{position:absolute;bottom:max(clamp(30px,3.4vw,48px),env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:clamp(20px,3vw,40px);font:var(--type-eyebrow);letter-spacing:var(--track-wider);text-transform:uppercase;color:var(--sac-green);animation:rise 1.2s cubic-bezier(.16,1,.3,1) 1.15s both}
 .foot a{color:inherit;transition:color .2s ease;display:inline-flex;align-items:center;min-height:44px;padding:0 20px;margin:0 -20px}
-.foot a:hover{color:var(--sac-green)}
+.foot a:hover{color:var(--sac-paper)}
+.foot a{text-underline-offset:5px;text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:rgba(0,168,23,.45)}
 @media (prefers-reduced-motion:reduce){.glow,.center,.crest,.rule,.wordmark,.tagline,.frame,.corner,.foot,.grid,.veil{animation:none}.rule{width:64px}.crest-wrap{transform:none!important}}
 @media (max-width:768px){
 .stage::before{background:radial-gradient(140% 80% at 50% 6%,#0b3a45 0%,#06272e 48%,#04191e 100%)}
@@ -86,9 +84,7 @@ a:hover{color:var(--sac-green)}
 <main class="stage">
 <div class="gw a"><div class="glow a"></div></div>
 <div class="gw b"><div class="glow b"></div></div>
-<div class="grid"></div>
 <div class="veil"></div>
-<div class="grain"></div>
 <div class="frame"></div>
 <span class="corner l">Est. Santurce</span>
 <span class="corner r">Puerto Rico</span>
