@@ -130,6 +130,27 @@ addEventListener('pointerup',()=>{held=false;rest()},{passive:true});
 addEventListener('pointercancel',()=>{held=false;rest()},{passive:true});
 }
 })();
+(()=>{
+const A=document.querySelector('.gw.a'),B=document.querySelector('.gw.b');
+if(!A||!B||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+if(matchMedia('(hover:hover)').matches)return;
+const PULL_A=130,PULL_B=92;
+let tx=0,ty=0,cx=0,cy=0,raf=0;
+const tick=()=>{cx+=(tx-cx)*.03;cy+=(ty-cy)*.03;
+A.style.setProperty('--ax',(cx*PULL_A).toFixed(1)+'px');
+A.style.setProperty('--ay',(cy*PULL_A).toFixed(1)+'px');
+B.style.setProperty('--bx',(cx*-PULL_B).toFixed(1)+'px');
+B.style.setProperty('--by',(cy*-PULL_B).toFixed(1)+'px');
+raf=(Math.abs(tx-cx)>.0004||Math.abs(ty-cy)>.0004)?requestAnimationFrame(tick):0};
+const set=(x,y)=>{tx=Math.max(-1,Math.min(1,x));ty=Math.max(-1,Math.min(1,y));A.classList.add('live');B.classList.add('live');if(!raf)raf=requestAnimationFrame(tick)};
+const release=()=>{A.classList.remove('live');B.classList.remove('live');tx=ty=0;if(!raf)raf=requestAnimationFrame(tick)};
+const from=e=>set(e.clientX/innerWidth*2-1,e.clientY/innerHeight*2-1);
+let down=false;
+addEventListener('pointerdown',e=>{down=true;from(e)},{passive:true});
+addEventListener('pointermove',e=>{if(down)from(e)},{passive:true});
+addEventListener('pointerup',()=>{down=false;release()},{passive:true});
+addEventListener('pointercancel',()=>{down=false;release()},{passive:true});
+})();
 </script>
 </body>
 </html>
