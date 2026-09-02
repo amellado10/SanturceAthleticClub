@@ -55,9 +55,9 @@ a:hover{color:var(--sac-green)}
 .corner{position:absolute;top:calc(clamp(20px,3vw,40px) + 14px);font:var(--type-eyebrow);letter-spacing:var(--track-widest);text-transform:uppercase;color:rgba(244,242,237,.42);animation:rise 1.2s cubic-bezier(.16,1,.3,1) 1s both}.corner.l
 {left:clamp(36px,4vw,58px)}
 .corner.r{right:clamp(36px,4vw,58px)}
-.foot{position:absolute;bottom:max(clamp(30px,3.4vw,48px),env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:clamp(20px,3vw,40px);font:var(--type-eyebrow);letter-spacing:var(--track-wider);text-transform:uppercase;color:rgba(244,242,237,.42);animation:rise 1.2s cubic-bezier(.16,1,.3,1) 1.15s both}
+.foot{position:absolute;bottom:max(clamp(30px,3.4vw,48px),env(safe-area-inset-bottom));left:0;right:0;display:flex;justify-content:center;gap:clamp(20px,3vw,40px);font:var(--type-eyebrow);letter-spacing:var(--track-wider);text-transform:uppercase;color:var(--sac-green);animation:rise 1.2s cubic-bezier(.16,1,.3,1) 1.15s both}
 .foot a{color:inherit;transition:color .2s ease;display:inline-flex;align-items:center;min-height:44px;padding:0 20px;margin:0 -20px}
-.foot a:hover{color:var(--sac-green)}
+.foot a:hover{color:var(--text-inverse)}
 @media (prefers-reduced-motion:reduce){.glow,.center,.crest,.rule,.wordmark,.tagline,.frame,.corner,.foot,.grid,.veil{animation:none}.rule{width:64px}.crest-wrap{transform:none!important}}
 @media (max-width:768px){
 .stage::before{background:radial-gradient(140% 80% at 50% 6%,#0b3a45 0%,#06272e 48%,#04191e 100%)}
@@ -71,6 +71,7 @@ a:hover{color:var(--sac-green)}
 .veil{background:radial-gradient(85% 55% at 50% 46%,transparent 26%,rgba(4,25,30,.74) 100%)}
 .frame{inset:16px}
 .crest{width:min(62vw,300px)}
+.crest-wrap{transition:transform .7s var(--ease-standard)}
 .center{gap:clamp(22px,3.4vh,34px);padding:0 20px}
 .corner{top:30px;font-size:9px;letter-spacing:.14em}
 .corner.l{left:30px}
@@ -116,38 +117,18 @@ wrap.style.setProperty('--rx',(cx*MAX_TILT).toFixed(2)+'deg');
 wrap.style.setProperty('--ry',(cy*MAX_TILT).toFixed(2)+'deg');
 raf=(Math.abs(tx-cx)>.0005||Math.abs(ty-cy)>.0005)?requestAnimationFrame(tick):0};
 const set=(x,y)=>{tx=Math.max(-1,Math.min(1,x));ty=Math.max(-1,Math.min(1,y));wrap.classList.add('live');if(!raf)raf=requestAnimationFrame(tick)};
+const rest=()=>{wrap.classList.remove('live');tx=ty=0;if(!raf)raf=requestAnimationFrame(tick)};
+const pos=e=>set(e.clientX/innerWidth*2-1,e.clientY/innerHeight*2-1);
 if(matchMedia('(hover:hover)').matches){
-addEventListener('pointermove',e=>set(e.clientX/innerWidth*2-1,e.clientY/innerHeight*2-1),{passive:true});
-addEventListener('pointerleave',()=>{wrap.classList.remove('live');tx=ty=0;if(!raf)raf=requestAnimationFrame(tick)});
+addEventListener('pointermove',pos,{passive:true});
+addEventListener('pointerleave',rest);
+}else{
+let held=false;
+addEventListener('pointerdown',e=>{held=true;pos(e)},{passive:true});
+addEventListener('pointermove',e=>{if(held)pos(e)},{passive:true});
+addEventListener('pointerup',()=>{held=false;rest()},{passive:true});
+addEventListener('pointercancel',()=>{held=false;rest()},{passive:true});
 }
-const onTilt=e=>{if(e.gamma==null&&e.beta==null)return;set((e.gamma||0)/26,((e.beta||0)-42)/26)};
-const listen=()=>addEventListener('deviceorientation',onTilt,{passive:true});
-if(typeof DeviceOrientationEvent!=='undefined'){
-if(typeof DeviceOrientationEvent.requestPermission==='function'){
-const ask=()=>{DeviceOrientationEvent.requestPermission().then(s=>{if(s==='granted')listen()}).catch(()=>{});removeEventListener('touchend',ask)};
-addEventListener('touchend',ask,{once:true,passive:true});
-}else listen();
-}
-})();
-(()=>{
-const A=document.querySelector('.gw.a'),B=document.querySelector('.gw.b');
-if(!A||!B||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-const PULL_A=90,PULL_B=62;
-let tx=0,ty=0,cx=0,cy=0,raf=0;
-const tick=()=>{cx+=(tx-cx)*.03;cy+=(ty-cy)*.03;
-A.style.setProperty('--ax',(cx*PULL_A).toFixed(1)+'px');
-A.style.setProperty('--ay',(cy*PULL_A).toFixed(1)+'px');
-B.style.setProperty('--bx',(cx*-PULL_B).toFixed(1)+'px');
-B.style.setProperty('--by',(cy*-PULL_B).toFixed(1)+'px');
-raf=(Math.abs(tx-cx)>.0004||Math.abs(ty-cy)>.0004)?requestAnimationFrame(tick):0};
-const set=(x,y)=>{tx=Math.max(-1,Math.min(1,x));ty=Math.max(-1,Math.min(1,y));A.classList.add('live');B.classList.add('live');if(!raf)raf=requestAnimationFrame(tick)};
-const release=()=>{A.classList.remove('live');B.classList.remove('live');tx=ty=0;if(!raf)raf=requestAnimationFrame(tick)};
-const from=e=>set(e.clientX/innerWidth*2-1,e.clientY/innerHeight*2-1);
-let down=false;
-addEventListener('pointerdown',e=>{down=true;from(e)},{passive:true});
-addEventListener('pointermove',e=>{if(e.pointerType==='mouse'||down)from(e)},{passive:true});
-addEventListener('pointerup',()=>{down=false;release()},{passive:true});
-addEventListener('pointercancel',()=>{down=false;release()},{passive:true});
 })();
 </script>
 </body>
