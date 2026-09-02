@@ -1,0 +1,200 @@
+/* tokens/fonts.css */
+/* SANTURCE ATHLETIC CLUB — WEBFONTS
+   The club's production typeface has not been supplied yet. Until the real
+   font binaries arrive, the system loads Archivo (Google Fonts) as a
+   stand-in for the tight bold grotesque used on the official palette sheet
+   and crest lettering. See readme.md > Typography for the substitution note.
+   When real files land: drop them in assets/fonts/ and replace the @import
+   below with @font-face rules pointing at them. */
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap");
+
+/* tokens/colors.css */
+:root{
+  /* Brand palette — exact values from SAC_Colors.png (Pantone-matched) */
+  --sac-blue:#00567d;        /* Pantone 308 C */
+  --sac-green:#00a817;       /* Pantone 2423 C */
+  --sac-teal:#003841;        /* Pantone 2217 C */
+  --sac-navy:#06272e;        /* Pantone 5463 C */
+
+  /* Neutrals — derived, paper-and-ink range for editorial layouts */
+  --sac-paper:#f4f2ed;
+  --sac-paper-2:#e9e6df;
+  --sac-white:#ffffff;
+  --sac-grey-100:#d8d5cd;
+  --sac-grey-200:#b5b2aa;
+  --sac-grey-400:#7d7c76;
+  --sac-grey-600:#4a4a47;
+  --sac-black:#0b0b0a;
+
+  /* Tints of brand hues, for washes and hovers only */
+  --sac-blue-tint:#e3edf2;
+  --sac-green-tint:#e3f4e5;
+  --sac-navy-tint:#dfe4e5;
+  --sac-blue-deep:#00405e;
+  --sac-green-deep:#008412;
+
+  /* Semantic surfaces */
+  --surface-page:var(--sac-paper);
+  --surface-card:var(--sac-white);
+  --surface-inverse:var(--sac-navy);
+  --surface-brand:var(--sac-blue);
+  --surface-accent:var(--sac-green);
+  --surface-muted:var(--sac-paper-2);
+
+  /* Semantic text */
+  --text-body:var(--sac-navy);
+  --text-strong:var(--sac-black);
+  --text-muted:var(--sac-grey-400);
+  --text-inverse:var(--sac-paper);
+  --text-inverse-muted:var(--sac-grey-200);
+  --text-brand:var(--sac-blue);
+  --text-accent:var(--sac-green-deep);
+  --text-link:var(--sac-navy);
+  --text-link-hover:var(--sac-blue);
+
+  /* Semantic lines */
+  --line-hairline:rgba(6,39,46,.14);
+  --line-rule:rgba(6,39,46,.28);
+  --line-strong:var(--sac-navy);
+  --line-inverse:rgba(244,242,237,.22);
+
+  /* Status — the palette has no dedicated status hues; green doubles as
+     success and the deep teal carries warnings. Errors use a red mixed to
+     sit beside the brand blue without clashing. */
+  --status-success:var(--sac-green-deep);
+  --status-warning:#8a5a00;
+  --status-error:#9b1f1f;
+  --status-info:var(--sac-blue);
+}
+
+/* tokens/typography.css */
+:root{
+  /* Families. --font-core is the workhorse grotesque (currently substituted). */
+  --font-core:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --font-display:var(--font-core);
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+
+  /* Weights */
+  --weight-regular:400;
+  --weight-medium:500;
+  --weight-semibold:600;
+  --weight-bold:700;
+  --weight-black:800;
+
+  /* Sizes — editorial scale, ~1.28 ratio above body */
+  --size-2xs:10px;
+  --size-xs:11px;
+  --size-sm:13px;
+  --size-base:15px;
+  --size-md:17px;
+  --size-lg:21px;
+  --size-xl:27px;
+  --size-2xl:36px;
+  --size-3xl:48px;
+  --size-4xl:64px;
+  --size-5xl:88px;
+  --size-6xl:124px;
+
+  /* Line heights */
+  --leading-tight:0.94;
+  --leading-snug:1.08;
+  --leading-heading:1.16;
+  --leading-body:1.55;
+  --leading-loose:1.7;
+
+  /* Tracking — display sets tighten, small caps labels open up */
+  --track-tighter:-0.03em;
+  --track-tight:-0.015em;
+  --track-normal:0; /* @kind other */
+  --track-wide:0.06em;
+  --track-wider:0.12em;
+  --track-widest:0.22em;
+
+  /* Semantic roles */
+  --type-display:var(--weight-black) var(--size-5xl)/var(--leading-tight) var(--font-display);
+  --type-h1:var(--weight-bold) var(--size-3xl)/var(--leading-snug) var(--font-display);
+  --type-h2:var(--weight-bold) var(--size-2xl)/var(--leading-heading) var(--font-display);
+  --type-h3:var(--weight-semibold) var(--size-lg)/var(--leading-heading) var(--font-core);
+  --type-body:var(--weight-regular) var(--size-base)/var(--leading-body) var(--font-core);
+  --type-body-lg:var(--weight-regular) var(--size-md)/var(--leading-body) var(--font-core);
+  --type-small:var(--weight-regular) var(--size-sm)/var(--leading-body) var(--font-core);
+  --type-label:var(--weight-bold) var(--size-xs)/1.2 var(--font-core);
+  --type-eyebrow:var(--weight-bold) var(--size-2xs)/1.2 var(--font-core);
+}
+
+/* tokens/spacing.css */
+:root{
+  /* 4px base step */
+  --space-0:0;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-8:32px;
+  --space-10:40px;
+  --space-12:48px;
+  --space-16:64px;
+  --space-20:80px;
+  --space-24:96px;
+  --space-32:128px;
+  --space-40:160px;
+
+  /* Layout */
+  --page-max:1440px;
+  --page-gutter:24px;
+  --page-gutter-lg:48px;
+  --grid-columns:12; /* @kind other */
+  --grid-gap:20px;
+  --section-y:96px;
+  --section-y-lg:160px;
+  --header-height:64px;
+  --marquee-height:32px;
+}
+
+/* tokens/borders.css */
+:root{
+  /* Square by default — the brand is stamped and squared, not soft */
+  --radius-none:0;
+  --radius-xs:2px;
+  --radius-sm:3px;
+  --radius-pill:999px;
+  --radius-crest:50%;
+
+  --border-hairline:1px solid var(--line-hairline);
+  --border-rule:1px solid var(--line-rule);
+  --border-strong:1px solid var(--line-strong);
+  --border-heavy:2px solid var(--line-strong);
+  --border-inverse:1px solid var(--line-inverse);
+
+  /* Shadows are near-absent. Only overlays get one. */
+  --shadow-none:none;
+  --shadow-overlay:0 24px 64px -16px rgba(6,39,46,.34);
+  --shadow-sticky:0 1px 0 0 var(--line-hairline);
+  --focus-ring:0 0 0 2px var(--sac-paper),0 0 0 4px var(--sac-blue);
+}
+
+/* tokens/motion.css */
+:root{
+  --duration-instant:80ms; /* @kind other */
+  --duration-fast:140ms; /* @kind other */
+  --duration-base:220ms; /* @kind other */
+  --duration-slow:400ms; /* @kind other */
+  --duration-marquee:28s; /* @kind other */
+  --ease-standard:cubic-bezier(.2,0,.2,1); /* @kind other */
+  --ease-out:cubic-bezier(0,0,.2,1); /* @kind other */
+  --ease-linear:linear; /* @kind other */
+  --transition-hover:color var(--duration-fast) var(--ease-standard),background-color var(--duration-fast) var(--ease-standard),border-color var(--duration-fast) var(--ease-standard),opacity var(--duration-fast) var(--ease-standard);
+}
+
+/* tokens/base.css */
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--surface-page);color:var(--text-body);font:var(--type-body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+h1,h2,h3,h4,p{margin:0}
+a{color:var(--text-link);text-decoration:none;transition:var(--transition-hover)}
+a:hover{color:var(--text-link-hover)}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit}
+::selection{background:var(--sac-green);color:var(--sac-navy)}
+
